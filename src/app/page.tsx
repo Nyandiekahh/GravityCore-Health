@@ -1,101 +1,111 @@
-import Image from "next/image";
+'use client';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { Activity, Heart, Users, Building2, Shield, Clock } from 'lucide-react';
+import styles from './page.module.css';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const statsFadeIn = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6 }
+  };
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  return (
+    <div className={styles.container}>
+      <div className={styles.medicalDecoration}>
+        <div className={styles.pulseRing}></div>
+        <div className={styles.pulseRing} style={{ left: '75%', top: '30%' }}></div>
+        <div className={styles.heartbeat}></div>
+        <div className={styles.dnaHelix}></div>
+        <div className={styles.crossSymbol}></div>
+        <div className={styles.crossSymbol} style={{ right: '10%', top: '20%' }}></div>
+        
+        {/* Floating Medical Icons */}
+        <div className={styles.floatingIcon} style={{ top: '15%', left: '20%' }}>
+          <Heart size={24} />
         </div>
+        <div className={styles.floatingIcon} style={{ top: '75%', right: '15%' }}>
+          <Activity size={24} />
+        </div>
+        <div className={styles.floatingIcon} style={{ top: '35%', right: '25%' }}>
+          <Building2 size={24} />
+        </div>
+      </div>
+
+      <main className={styles.main}>
+        <motion.h1 
+          className={styles.title}
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          GravityCore Health
+        </motion.h1>
+
+        <motion.p 
+          className={styles.description}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+        >
+          Advanced Healthcare Management System
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+        >
+          <Link href="/login" className={styles.loginButton}>
+            Access Portal
+            <span className={styles.arrow}>→</span>
+          </Link>
+        </motion.div>
+
+        <div className={styles.stats}>
+          <motion.div className={styles.stat} {...statsFadeIn} transition={{ delay: 0.7 }}>
+            <Clock className={styles.statIcon} />
+            <span className={styles.statNumber}>24/7</span>
+            <span className={styles.statLabel}>Healthcare Access</span>
+          </motion.div>
+
+          <motion.div className={styles.stat} {...statsFadeIn} transition={{ delay: 0.8 }}>
+            <Building2 className={styles.statIcon} />
+            <span className={styles.statNumber}>100+</span>
+            <span className={styles.statLabel}>Medical Facilities</span>
+          </motion.div>
+
+          <motion.div className={styles.stat} {...statsFadeIn} transition={{ delay: 0.9 }}>
+            <Users className={styles.statIcon} />
+            <span className={styles.statNumber}>1M+</span>
+            <span className={styles.statLabel}>Patient Records</span>
+          </motion.div>
+        </div>
+
+        <motion.div 
+          className={styles.features}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.1, duration: 0.6 }}
+        >
+          <div className={styles.featureCard}>
+            <Shield size={24} />
+            <h3>Secure Records</h3>
+            <p>End-to-end encrypted patient data</p>
+          </div>
+          <div className={styles.featureCard}>
+            <Activity size={24} />
+            <h3>Real-time Updates</h3>
+            <p>Instant access to medical records</p>
+          </div>
+          <div className={styles.featureCard}>
+            <Users size={24} />
+            <h3>Collaborative Care</h3>
+            <p>Connected healthcare providers</p>
+          </div>
+        </motion.div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
