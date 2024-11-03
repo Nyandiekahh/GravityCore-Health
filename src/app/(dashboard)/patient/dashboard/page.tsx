@@ -1,84 +1,100 @@
 'use client';
-import { useState } from 'react';
 import {
   CalendarDays,
   ActivitySquare,
   Heart,
-  PillIcon,
-  FileText,
+  Link2,
+  FileText
 } from "lucide-react";
 import styles from './styles.module.css';
 
+interface ActivityItem {
+  id: string;
+  icon: JSX.Element;
+  title: string;
+  description: string;
+  timeAgo: string;
+}
+
 export default function PatientDashboard() {
-  const [healthMetrics] = useState({
-    nextAppointment: '2024-11-15',
-    bloodPressure: '120/80',
-    heartRate: '72 bpm',
-    medicationReminders: 3,
-    upcomingTests: 2
-  });
+  const healthMetrics = [
+    {
+      icon: <CalendarDays className={styles.metricIcon} />,
+      label: "Next Appointment",
+      value: "2024-11-15"
+    },
+    {
+      icon: <ActivitySquare className={styles.metricIcon} />,
+      label: "Blood Pressure",
+      value: "120/80"
+    },
+    {
+      icon: <Heart className={styles.metricIcon} />,
+      label: "Heart Rate",
+      value: "72 bpm"
+    },
+    {
+      icon: <Link2 className={styles.metricIcon} />,
+      label: "Medication Reminders",
+      value: "3 medications due"
+    }
+  ];
+
+  const recentActivity: ActivityItem[] = [
+    {
+      id: '1',
+      icon: <FileText size={20} className={styles.activityIcon} />,
+      title: "Blood Test Results",
+      description: "Dr. Smith reviewed your recent blood work",
+      timeAgo: "2 days ago"
+    },
+    {
+      id: '2',
+      icon: <CalendarDays size={20} className={styles.activityIcon} />,
+      title: "Appointment Scheduled",
+      description: "Follow-up consultation with Dr. Johnson",
+      timeAgo: "3 days ago"
+    },
+    {
+      id: '3',
+      icon: <Link2 size={20} className={styles.activityIcon} />,
+      title: "Prescription Renewed",
+      description: "Your medication prescription has been renewed",
+      timeAgo: "5 days ago"
+    }
+  ];
 
   return (
-    <div className={styles.dashboardContainer}>
-      <h1 className={styles.dashboardTitle}>Patient Health Dashboard</h1>
+    <div className={styles.dashboard}>
+      <h1 className={styles.title}>Patient Health Dashboard</h1>
       
       <div className={styles.metricsGrid}>
-        <div className={styles.metricCard}>
-          <CalendarDays size={24} className={styles.icon} />
-          <h3>Next Appointment</h3>
-          <p>{healthMetrics.nextAppointment}</p>
-        </div>
-        
-        <div className={styles.metricCard}>
-          <ActivitySquare size={24} className={styles.icon} />
-          <h3>Blood Pressure</h3>
-          <p>{healthMetrics.bloodPressure}</p>
-        </div>
-        
-        <div className={styles.metricCard}>
-          <Heart size={24} className={styles.icon} />
-          <h3>Heart Rate</h3>
-          <p>{healthMetrics.heartRate}</p>
-        </div>
-        
-        <div className={styles.metricCard}>
-          <PillIcon size={24} className={styles.icon} />
-          <h3>Medication Reminders</h3>
-          <p>{healthMetrics.medicationReminders} medications due</p>
-        </div>
+        {healthMetrics.map((metric, index) => (
+          <div key={index} className={styles.metricCard}>
+            {metric.icon}
+            <div className={styles.metricContent}>
+              <span className={styles.metricLabel}>{metric.label}</span>
+              <span className={styles.metricValue}>{metric.value}</span>
+            </div>
+          </div>
+        ))}
       </div>
 
-      <div className={styles.recentActivity}>
+      <section className={styles.activitySection}>
         <h2 className={styles.sectionTitle}>Recent Activity</h2>
         <div className={styles.activityList}>
-          <div className={styles.activityItem}>
-            <FileText size={20} className={styles.icon} />
-            <div className={styles.activityContent}>
-              <h4>Blood Test Results</h4>
-              <p>Dr. Smith reviewed your recent blood work</p>
-              <small>2 days ago</small>
+          {recentActivity.map((activity) => (
+            <div key={activity.id} className={styles.activityItem}>
+              {activity.icon}
+              <div className={styles.activityContent}>
+                <h3 className={styles.activityTitle}>{activity.title}</h3>
+                <p className={styles.activityDescription}>{activity.description}</p>
+                <span className={styles.activityTime}>{activity.timeAgo}</span>
+              </div>
             </div>
-          </div>
-
-          <div className={styles.activityItem}>
-            <CalendarDays size={20} className={styles.icon} />
-            <div className={styles.activityContent}>
-              <h4>Appointment Scheduled</h4>
-              <p>Follow-up consultation with Dr. Johnson</p>
-              <small>3 days ago</small>
-            </div>
-          </div>
-
-          <div className={styles.activityItem}>
-            <PillIcon size={20} className={styles.icon} />
-            <div className={styles.activityContent}>
-              <h4>Prescription Renewed</h4>
-              <p>Your medication prescription has been renewed</p>
-              <small>5 days ago</small>
-            </div>
-          </div>
+          ))}
         </div>
-      </div>
+      </section>
     </div>
   );
 }
